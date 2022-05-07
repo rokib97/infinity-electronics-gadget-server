@@ -27,7 +27,6 @@ async function run() {
     app.get("/products", async (req, res) => {
       const query = {};
       const result = req.query.name;
-      console.log(result);
       let products;
       if (result === "inventory") {
         const cursor = productCollection.find(query);
@@ -61,6 +60,12 @@ async function run() {
         updateDoc,
         options
       );
+      res.send(result);
+    });
+    app.delete("/product/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: ObjectId(id) };
+      const result = await productCollection.deleteOne(query);
       res.send(result);
     });
   } finally {
