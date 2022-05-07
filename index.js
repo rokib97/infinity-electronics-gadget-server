@@ -24,6 +24,7 @@ async function run() {
       .db("infinityElectronics")
       .collection("products");
 
+    // get all daata api
     app.get("/products", async (req, res) => {
       const query = {};
       const result = req.query.name;
@@ -38,6 +39,7 @@ async function run() {
       res.send(products);
     });
 
+    // get single data api
     app.get("/product/:id", async (req, res) => {
       const id = req.params.id;
       const query = { _id: ObjectId(id) };
@@ -45,6 +47,7 @@ async function run() {
       res.send(product);
     });
 
+    // update quantity api
     app.put("/product/:id", async (req, res) => {
       const id = req.params.id;
       const query = { _id: ObjectId(id) };
@@ -62,6 +65,7 @@ async function run() {
       );
       res.send(result);
     });
+    // delete single item api
     app.delete("/product/:id", async (req, res) => {
       const id = req.params.id;
       const query = { _id: ObjectId(id) };
