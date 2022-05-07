@@ -79,6 +79,15 @@ async function run() {
       const result = await productCollection.insertOne(newProduct);
       res.send(result);
     });
+
+    // get single user product api
+    app.get("/items", async (req, res) => {
+      const email = req.query.email;
+      const query = { email };
+      const cursor = productCollection.find(query);
+      const products = await cursor.toArray();
+      res.send(products);
+    });
   } finally {
     // await client.close();
   }
