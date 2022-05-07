@@ -1,6 +1,6 @@
 const express = require("express");
 const cors = require("cors");
-const { MongoClient, ServerApiVersion } = require("mongodb");
+const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 
 require("dotenv").config();
 const port = process.env.PORT || 5000;
@@ -26,21 +26,48 @@ async function run() {
 
     app.get("/products", async (req, res) => {
       const query = {};
-      const cursor = productCollection.find(query);
-      const services = await cursor.toArray();
-      res.send(services);
+      const result = req.query.name;
+      console.log(result);
+      let products;
+      if (result === "inventory") {
+        const cursor = productCollection.find(query);
+        products = await cursor.toArray();
+      } else {
+        const cursor = productCollection.find(query);
+        products = await cursor.limit(6).toArray();
+      }
+      res.send(products);
+    });
+
+    app.get("/product/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: ObjectId(id) };
+      const product = await productCollection.findOne(query);
+      res.send(product);
+    });
+
+    app.put("/product/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: ObjectId(id) };
+      const options = { upsert: true };
+      const data = req.body;
+      const updateDoc = {
+        $set: {
+          quantity: data.quantity,
+        },
+      };
+      const result = await productCollection.updateOne(
+        query,
+        updateDoc,
+        options
+      );
+      res.send(result);
     });
   } finally {
     // await client.close();
   }
 }
 run().catch(console.dir);
-// client.connect((err) => {
-//   const collection = client.db("test").collection("devices");
-//   // perform actions on the collection object
-//   console.log("db connected");
-//   client.close();
-// });
 
 // root api
 app.get("/", (req, res) => {
