@@ -93,10 +93,9 @@ async function run() {
 
     // get single user product api
     app.get("/items", async (req, res) => {
-      // const authHeader = req.headers.authorization;
-      // console.log(authHeader);
+      const authHeader = req.headers.authorization;
+      console.log(authHeader);
       const email = req.query.email;
-      console.log(req.query.email);
       const query = { email };
       const cursor = productCollection.find(query);
       const products = await cursor.toArray();
