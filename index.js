@@ -23,9 +23,8 @@ function verifyJWT(req, res, next) {
       return res.status(403).send({ message: "forbidden access" });
     }
     req.decoded = decoded;
+    next();
   });
-
-  next();
 }
 
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.wmqrb.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
