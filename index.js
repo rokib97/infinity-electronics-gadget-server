@@ -28,26 +28,26 @@ function verifyJWT(req, res, next) {
   });
 }
 
-// const uri =
-//   "mongodb+srv://infinityUser:9nuS8e8syJAPYHzI@cluster0.wmqrb.mongodb.net/?retryWrites=true&w=majority";
-// // Create a MongoClient with a MongoClientOptions object to set the Stable API version
-// const client = new MongoClient(uri, {
-//   serverApi: {
-//     version: ServerApiVersion.v1,
-//     strict: true,
-//     deprecationErrors: true,
-//   },
-// });
-
-const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.wmqrb.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
+const uri =
+  "mongodb+srv://infinityUser:9nuS8e8syJAPYHzI@cluster0.wmqrb.mongodb.net/?retryWrites=true&w=majority";
+// Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  serverApi: ServerApiVersion.v1,
+  serverApi: {
+    version: ServerApiVersion.v1,
+    strict: true,
+    deprecationErrors: true,
+  },
 });
+
+// const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.wmqrb.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
+// const client = new MongoClient(uri, {
+//   useNewUrlParser: true,
+//   useUnifiedTopology: true,
+//   serverApi: ServerApiVersion.v1,
+// });
 async function run() {
   try {
-     await client.connect();
+    await client.connect();
     console.log("connected");
     const productCollection = client
       .db("infinityElectronics")
