@@ -6,11 +6,15 @@
       "use": "@vercel/node"
     }
   ],
+  "buildCommand": "npm start",
   "routes": [
     {
       "src": "/(.*)",
       "dest": "/",
-      "methods": ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"]
+      "methods": ["GET", "POST", "PATCH", "PUT", "DELETE", "OPTIONS"],
+      "headers": {
+        "Access-Control-Allow-Origin": "*"
+      }
     }
   ]
 }
